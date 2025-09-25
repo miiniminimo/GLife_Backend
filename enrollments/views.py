@@ -6,7 +6,6 @@ class EnrollmentListCreateAPI(generics.ListCreateAPIView):
     queryset = Enrollment.objects.all()
     serializer_class = EnrollmentSerializer
 
-
 class EnrollmentDetailAPI(generics.RetrieveUpdateDestroyAPIView):
     queryset = Enrollment.objects.all()
     serializer_class = EnrollmentSerializer

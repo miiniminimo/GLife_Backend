@@ -1,5 +1,7 @@
+# organizations/serializers.py
 from rest_framework import serializers
 from .models import Company, Employee
+
 
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:
@@ -7,9 +9,17 @@ class CompanySerializer(serializers.ModelSerializer):
         fields = ["id", "name", "biz_no", "created_at"]
 
 
-class EmployeeSerializer(serializers.ModelSerializer):
-    company = CompanySerializer(read_only=True)
+class CompanyCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Company
+        fields = ["id", "name", "biz_no", "password"]
 
+    def create(self, validated_data):
+        return Company.objects.create(**validated_data)
+
+
+class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employee
-        fields = ["id", "emp_no", "name", "dept", "position", "company", "created_at"]
+        fields = ["id", "emp_no", "name", "dept", "phone", "email", "company"]
+        read_only_fields = ["company"]

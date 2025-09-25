@@ -4,4 +4,4 @@ from .models import Enrollment
 class EnrollmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Enrollment
-        fields = ["id", "employee", "course", "status", "enrolled_at"]
+        fields = "__all__"
