@@ -4,7 +4,7 @@ from courses.models import Course
 
 class Enrollment(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name="enrollments")
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="enrollments")
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="courses")
     enrolled_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=20, default="enrolled")  # 예: enrolled, cancelled
 
