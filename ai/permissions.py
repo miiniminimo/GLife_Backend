@@ -27,3 +27,11 @@ class HasValidAPIKey(BasePermission):
             return False
         
         return True
+
+
+class IsCompanySession(BasePermission):
+    """
+    요청자가 인증된 회사 계정(JWT 로그인)인지 확인
+    """
+    def has_permission(self, request, view):
+        return bool(request.user and request.user.is_authenticated)

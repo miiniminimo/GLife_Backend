@@ -1,8 +1,5 @@
 from django.shortcuts import render
-
-# Create your views here.
-# ai/views.py
-
+from organizations.permissions import IsCompanySession
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
@@ -10,8 +7,6 @@ from rest_framework import status
 
 # --- Permissions ---
 from .permissions import HasValidAPIKey
-# 웹 대시보드용 권한 클래스는 organizations 앱에서 가져와 재사용
-from organizations.views import IsCompanySession
 
 # --- Models ---
 from organizations.models import Employee, Company

@@ -1,16 +1,9 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import CompanyViewSet, EmployeeViewSet, CompanyLoginAPI
-
-# ✅ 라우터 등록 (ViewSet 기반)
-router = DefaultRouter()
-router.register(r"companies", CompanyViewSet, basename="company")
-router.register(r"employees", EmployeeViewSet, basename="employee")
+# organizations/urls.py
+from django.urls import path
+from .views import CompanyTokenObtainPairView
+from rest_framework_simplejwt.views import TokenRefreshView
 
 urlpatterns = [
-    # 로그인 API
-    path("login/", CompanyLoginAPI.as_view(), name="company-login"),
-
-    # ViewSet 라우터 API
-    path("", include(router.urls)),
+    path("login/", CompanyTokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("refresh/", TokenRefreshView.as_view(), name="token_refresh"),
 ]
