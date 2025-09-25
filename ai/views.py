@@ -73,7 +73,7 @@ class UnifiedEvaluationView(APIView):
     Unity로부터 센서 데이터를 받아 즉시 평가하고 결과를 반환하는 API
     POST /api/ai/evaluate/
     """
-    permission_classes = [HasValidAPIKey]  # 커스텀 권한 클래스로 교체
+    # permission_classes = [HasValidAPIKey]  # 커스텀 권한 클래스로 교체
 
     def _try_get_employee(self, emp_no: str, company: Company):
         try:

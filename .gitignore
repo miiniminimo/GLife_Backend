@@ -12,6 +12,7 @@ staticfiles/
 venv/
 .env
 .env.*
+test/
 
 # Node / Vite
 node_modules/
