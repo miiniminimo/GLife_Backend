@@ -1,25 +1,31 @@
-# organizations/serializers.py
 from rest_framework import serializers
-from .models import Company, Employee
+from rest_framework_simplejwt.tokens import RefreshToken
+from .models import Company
 
+class CompanyTokenObtainPairSerializer(serializers.Serializer):
+    biz_no = serializers.CharField()
+    password = serializers.CharField(write_only=True)
 
-class CompanySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Company
-        fields = ["id", "name", "biz_no", "created_at"]
+    def validate(self, attrs):
+        biz_no = attrs.get("biz_no")
+        password = attrs.get("password")
 
+        try:
+            company = Company.objects.get(biz_no=biz_no)
+        except Company.DoesNotExist:
+            raise serializers.ValidationError("Invalid business number or password")
 
-class CompanyCreateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Company
-        fields = ["id", "name", "biz_no", "password"]
+        if not company.check_password(password):
+            raise serializers.ValidationError("Invalid business number or password")
 
-    def create(self, validated_data):
-        return Company.objects.create(**validated_data)
+        # 👇 JWT 발급 (SimpleJWT 직접 사용)
+        refresh = RefreshToken.for_user(company)
 
-
-class EmployeeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Employee
-        fields = ["id", "emp_no", "name", "dept", "phone", "email", "company"]
-        read_only_fields = ["company"]
+        return {
+            "refresh": str(refresh),
+            "access": str(refresh.access_token),
+            "company": {
+                "biz_no": company.biz_no,
+                "name": company.name,
+            }
+        }

@@ -19,8 +19,9 @@ from django.urls import path, include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/organizations/", include("organizations.urls")),  # ✅ 이 줄 추가
-    path("api/courses/", include("courses.urls")),             # 나중에 courses 연결
-    path("api/enrollments/", include("enrollments.urls")),     # 나중에 enrollments 연결
-    path("api/ai/", include("ai.urls")),                       # 나중에 ai 연결
+    path("api/organizations/", include("organizations.urls")),
+    path("api/courses/", include("courses.urls")),
+    path("api/enrollments/", include("enrollments.urls")),
+    path("api/ai/", include("ai.urls")),
+    path("api/auth/", include("organizations.urls")),  # ✅ 여기서 login 매핑됨
 ]
